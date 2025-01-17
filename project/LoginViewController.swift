@@ -1,11 +1,13 @@
+
+
 import UIKit
 import CoreData
 
+
 class LoginViewController: UIViewController {
-    
-    @IBOutlet weak var emailTF: UITextField!
-    @IBOutlet weak var passwordTF: UITextField!
-    
+  @IBOutlet weak var emailTF: UITextField!
+  @IBOutlet weak var passwordTF: UITextField!
+
     var context: NSManagedObjectContext!
     
     override func viewDidLoad() {
@@ -13,74 +15,39 @@ class LoginViewController: UIViewController {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         context = appDelegate.persistentContainer.viewContext
+        
+//        let bundleIdentifier = Bundle.main.bundleIdentifier
+//        print("Bundle ID:", bundleIdentifier ?? "Bundle ID not found")
     }
     
-    //    private func showAlert(title: String, msg: String){
-    //        let alert = UIAlertController(
-    //            title: title,
-    //            message: msg,
-    //            preferredStyle: .alert
-    //        )
-    //
-    //        let okAction = UIAlertAction(
-    //            title: "OK",
-    //            style: .default
-    //        )
-    //
-    //        alert.addAction(okAction)
-    //        present(alert, animated: true)
-    //    }
-    
-    func showAlert(
-        title: String,
-        message: String,
-        isSuccess: Bool = false,
-        handler: ((UIAlertAction) -> Void)? = nil
-    ) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        if isSuccess {
-            // Add "Yes" and "No" buttons when it's a success case
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: handler))
-        } else {
-            // Default OK button for error cases
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        }
-        
-        // Present the alert on the main thread
-        if self.isViewLoaded && self.view.window != nil {
-            self.present(alert, animated: true, completion: nil)
-        } else {
-            // If the view is not in the window hierarchy, delay the presentation slightly
-            DispatchQueue.main.async {
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-        
-        // Present the alert on the main thread
-        //        if self.isViewLoaded && self.view.window != nil {
-        //            self.present(alert, animated: true, completion: nil)
-        //        } else {
-        //            // If the view is not in the window hierarchy, delay the presentation slightly
-        //            DispatchQueue.main.async {
-        //                self.present(alert, animated: true, completion: nil)
-        //            }
-        //        }
+  func showAlert(
+    title: String,
+    message: String,
+    isSuccess: Bool = false,
+    handler: ((UIAlertAction) -> Void)? = nil
+  ) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+    if isSuccess {
+      // Add "Yes" and "No" buttons when it's a success case
+      alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+      alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: handler))
+    } else {
+      // Default OK button for error cases
+      alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
     }
-    //
-    //    private func fetchUser(email: String, password: String) -> Bool {
-    //        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-    //        request.predicate = NSPredicate(format: "email == %@ AND password == %@", email, password)
-    //
-    //        do {
-    //            let results = try context.fetch(request)
-    //            return !results.isEmpty
-    //        } catch {
-    //            print("Failed to fetch user: \(error.localizedDescription)")
-    //            return false
-    //        }
-    //    }
+
+    // Present the alert on the main thread
+    if self.isViewLoaded && self.view.window != nil {
+      self.present(alert, animated: true, completion: nil)
+    } else {
+      // If the view is not in the window hierarchy, delay the presentation slightly
+      DispatchQueue.main.async {
+        self.present(alert, animated: true, completion: nil)
+      }
+    }
+  }
+
     func validateLogin(email: String, password: String) -> NSManagedObject? {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         request.predicate = NSPredicate(format: "email == %@ AND password == %@", email, password)
@@ -139,4 +106,3 @@ class LoginViewController: UIViewController {
         }
     }
     
-
